@@ -32,9 +32,9 @@ string particles[6] = {"pip", "pim", "kp", "km", "p", "ap"};
 string partTitles[6] = { "#pi^{+}","#pi^{#minus}","K^{+}","K^{#minus}","p", "#bar{p}"};
 double masses[6] = {0.13957061, 0.13957061, 0.493667, 0.493667, 0.938272, 0.938272};
 Color_t centrColors[11] = {kRed, kBlue, kGreen + 2, kBlack, kMagenta, kBlue+2, kBlack, kBlack, kBlack, kBlack, kBlack};
-Color_t partColors[6] = {kRed, kRed, kBlue, kBlue, kGreen + 2, kGreen + 2};
+Color_t partColors[6] = {kMagenta, kMagenta, kBlue, kBlue, kGreen + 2, kGreen + 2};
 string centrTitles[10] = {"0-10%", "10-20%", "20-30%", "30-40%", "40-60%", "60-80%"};
-double centrX[10] = {5, 15, 25, 35, 45, 70};
+double centrX[10] = {5, 15, 25, 35, 50, 70};
 // string centrTitles[10] = {"0-20%", "20-40%", "40-60%", "60-80%", "40-50%", "50-60%", "60-70%", "70-80%"};
 
 

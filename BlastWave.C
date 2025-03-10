@@ -72,20 +72,20 @@ void BlastWave( void )
     // ++++++ Draw spectra All +++++++++++++++++++++++++++++++++++++
 
     TCanvas *c2 = new TCanvas("c2", "c2", 29, 30, 1200, 1200);
-    Format_Canvas(c2, 1, 2, 0);
+    Format_Canvas(c2, 2, 3, 0);
 
-    for (int i: {0, 1})
+    for (int i: PARTS)
     {
         c2->SetLogy();
         c2->cd(i + 1);  
         
         double shiftX = (i % 2 == 0) ? 0 : 0.1;
         double texScale = (i < 3) ? 1 : 0.9;
-        TLegend *legend = new TLegend(0.5 - shiftX, 0.6, 0.95 - shiftX, 0.9); //1 column
+        TLegend *legend = new TLegend(0.5 - shiftX, 0.7, 0.95 - shiftX, 0.9); //1 column
         legend->SetBorderSize(0);
         legend->SetFillStyle(0);
         legend->SetNColumns(2);
-        legend->SetTextSize(0.075 * texScale);
+        legend->SetTextSize(0.072 * texScale);
 
         TLatex *titleTex = new TLatex(0.4, 500, partTitles[i].c_str());
         titleTex->SetTextFont(42);
@@ -159,3 +159,13 @@ void BlastWave( void )
     gROOT->ProcessLine(".q");
 }
 
+
+
+// Результаты глобальной аппроксимации:  \\
+//     \begin{tabular}{ |c|c|c|c|c|c|c| } 
+//      \hline
+//      &0-10 \%& 10-20 \% & 20-30 \% & 30-40 \% & 40-60 \% & 60-80 \% \\  \hline
+//      $T_0$[МэВ] & 0.5 & 0.5 & 0.12 & 0.4 & 0.2 & 0.12  \\ 
+//      $\beta_T$ & 1.0 & 1.0 & 1.0 & 1.0 & 1.0 & 1.0  \\ \hline
+//     \end{tabular}
+    
