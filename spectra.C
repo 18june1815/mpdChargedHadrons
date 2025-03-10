@@ -15,7 +15,7 @@ void spectra( int systN = 0 )
     SetSpectra(inputFileName, "pt");
 
     if (fitFunc == "levy")
-         FitLevy();
+        FitLevy();
     else
         FitHagedorn();
 
@@ -48,6 +48,8 @@ void spectra( int systN = 0 )
         {
             if (!grSpectra[i][centr]) continue;
             grSpectra[i][centr]->Draw("SAME");      
+            //levy[i][centr]->Draw("SAME");
+            
             legend->AddEntry(grSpectra[i][centr], centrTitles[centr].c_str(), "l");        
         }
         legend->Draw();

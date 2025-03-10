@@ -32,7 +32,7 @@ void FitLevy( void )
     double xmin[] = {0.2, 0.2, 0.3, 0.3, 0.4, 0.4};
     double xmax[] = {1.2, 1.2, 1.5, 1.5, 1.5, 1.5};
 
-    TF1 *levy[N_PARTS][N_CENTR];
+
     
     for (int part: PARTS)
     {
@@ -40,29 +40,36 @@ void FitLevy( void )
         {
             levy[part][centr] = new TF1("levy", LevyFunction, xmin[part], xmax[part], 4);
             levy[part][centr]->SetParNames("A", "n", "T", "m");
-            levy[part][centr]->FixParameter(3, masses[part]);
+            
 
-            if (part <= 1) // pi
-            {
-                levy[part][centr]->SetParameters(100, 4, 0.1, masses[part]);
-                levy[part][centr]->SetParLimits(0, 0, 1500);
-                levy[part][centr]->SetParLimits(1, 0, 15);
-                levy[part][centr]->SetParLimits(2, 0.08, 0.15);
-            }
+            levy[part][centr]->SetParameters(handConstLevy[part][centr], 10, 0.1, masses[part]);
+            levy[part][centr]->FixParameter(3, masses[part]);
+            
+            // levy[part][centr]->SetParLimits(2, 0.08, 0.14);
+            
             if (part == 2 || part == 3) //K
-            {
-                levy[part][centr]->SetParameters(10, 11, 0.1, masses[part]);
-                levy[part][centr]->SetParLimits(0, 0, 100);
-                levy[part][centr]->SetParLimits(1, 0, 30);
-                levy[part][centr]->SetParLimits(2, 0.08, 0.15);
-            }
-            if (part >= 4) //p
-            {
-                levy[part][centr]->SetParameters(10, 15, 0.1, masses[part]);
-                levy[part][centr]->SetParLimits(0, 0, 100);
-                levy[part][centr]->SetParLimits(1, 0, 30);
-                levy[part][centr]->SetParLimits(2, 0.08, 0.2);
-            }
+                levy[part][centr]->SetParLimits(1, 0, 12);
+            // if (part <= 1) // pi
+            // {
+            //     levy[part][centr]->SetParameters(100, 4, 0.1, masses[part]);
+            //     levy[part][centr]->SetParLimits(0, 0, 1500);
+            //     levy[part][centr]->SetParLimits(1, 0, 15);
+            //     levy[part][centr]->SetParLimits(2, 0.08, 0.15);
+            // }
+            // if (part == 2 || part == 3) //K
+            // {
+            //     levy[part][centr]->SetParameters(10, 11, 0.1, masses[part]);
+            //     levy[part][centr]->SetParLimits(0, 0, 100);
+            //     levy[part][centr]->SetParLimits(1, 0, 30);
+            //     levy[part][centr]->SetParLimits(2, 0.08, 0.15);
+            // }
+            // if (part >= 4) //p
+            // {
+            //     levy[part][centr]->SetParameters(10, 15, 0.1, masses[part]);
+            //     levy[part][centr]->SetParLimits(0, 0, 100);
+            //     levy[part][centr]->SetParLimits(1, 0, 30);
+            //     levy[part][centr]->SetParLimits(2, 0.08, 0.2);
+            // }
  
             grSpectra[part][centr]->Fit(levy[part][centr],  "QR+", "", xmin[part], xmax[part]);
             
@@ -77,5 +84,5 @@ void FitLevy( void )
         }
     }
 
-    WriteParams(outParams, outParamsErr, "output/txtParams/LevyParams.txt");
+    WriteParams(outParams, outParamsErr, true, "output/txtParams/LevyParams.txt");
 }

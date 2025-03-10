@@ -35,7 +35,22 @@ Color_t centrColors[11] = {kRed, kBlue, kGreen + 2, kBlack, kMagenta, kBlue+2, k
 Color_t partColors[6] = {kMagenta, kMagenta, kBlue, kBlue, kGreen + 2, kGreen + 2};
 string centrTitles[10] = {"0-10%", "10-20%", "20-30%", "30-40%", "40-60%", "60-80%"};
 double centrX[10] = {5, 15, 25, 35, 50, 70};
+int partMarkers[6] = {22, 23, 33, 34, 20, 21};
 // string centrTitles[10] = {"0-20%", "20-40%", "40-60%", "60-80%", "40-50%", "50-60%", "60-70%", "70-80%"};
+
+
+// =============== Для  Levy  ==========================
+TF1 *levy[N_PARTS][N_CENTR];
+double handConstLevy[MAX_PARTS][MAX_CENTR] = 
+    {
+        {300, 200, 150, 100, 50, 20},
+        {300, 200, 150, 100, 50, 20},
+        {50, 30, 20, 12, 9, 3},
+        {20, 15, 12, 8, 3, 1},
+        {50, 30, 20, 13, 10, 4},
+        {3, 1.5, 0.8, 0.3, 0.1},
+    };
+
 
 
 // =============== Для  BlastWave ======================

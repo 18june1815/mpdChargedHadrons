@@ -7,22 +7,35 @@ double constPar[MAX_PARTS][N_CENTR],
 
 void DrawParam(string paramName = "T", bool isSyst = true)
 {
+    TGraph *grNoErr[N_PARTS];
     TGraphErrors *gr[N_PARTS], *grSys[N_PARTS];
     double xerr[N_CENTR], xerrSys[N_CENTR];
-
+    gStyle->SetEndErrorSize(6); 
     for (int i: CENTR) xerr[i] = 0., xerrSys[i] = 1;
 
     for (int part: PARTS)
     {
-        if (paramName == "T")
+        if (paramName == "T") 
+        {
             gr[part] = new TGraphErrors(N_CENTR, centrX, Tpar[part], xerr, Tpar_err[part]);
+            grNoErr[part] = new TGraph(N_CENTR, centrX, Tpar[part]);
+        }
         else if (paramName == "n")
+        {
             gr[part] = new TGraphErrors(N_CENTR, centrX, nPar[part], xerr, nPar_err[part]);
-        
+            grNoErr[part] = new TGraph(N_CENTR, centrX, nPar[part]);
+        }
+            
+        grNoErr[part]->SetMarkerStyle(8);
+        grNoErr[part]->SetMarkerSize(3);
+        grNoErr[part]->SetMarkerColor(partColors[part]);
+
         gr[part]->SetMarkerStyle(8);
         gr[part]->SetMarkerSize(2);
         gr[part]->SetMarkerColor(partColors[part]);
-
+        gr[part]->SetLineColorAlpha(partColors[part], 0.3);
+        gr[part]->SetLineWidth(5);
+        
         if (isSyst)
         {
             if (paramName == "T")
@@ -49,7 +62,9 @@ void DrawParam(string paramName = "T", bool isSyst = true)
     TString pad_title_x = "centrality [%]";
     Format_Pad(ll, rl, pad_min, pad_max, pad_title_x, pad_title_y, pad_offset_x, pad_offset_y, pad_tsize, pad_lsize, "", 8);        
     
-    TLegend *legend = new TLegend(0.2, 0.7, 0.6, 0.85);
+    //TLegend *legend = new TLegend(0.2, 0.7, 0.6, 0.85);
+    TLegend *legend = new TLegend(0.7, 0.6, 0.9, 0.85);
+    
     legend->SetBorderSize(0);
     legend->SetFillStyle(0);
     legend->SetNColumns(2);
@@ -58,10 +73,18 @@ void DrawParam(string paramName = "T", bool isSyst = true)
     for (int part: PARTS)
     {
        gr[part]->Draw("P SAME");
+       
        if (isSyst) grSys[part]->Draw("P2");
 
        legend->AddEntry(gr[part], partTitles[part].c_str(), "P");
     }
+
+    // Рисует маркеры поверх всего
+    for (int part: PARTS)
+    {
+        grNoErr[part]->Draw("P SAME");
+    }
+
     legend->Draw();
     c2->SaveAs(("output/LevyParam_" + paramName + ".pdf").c_str());
 }
